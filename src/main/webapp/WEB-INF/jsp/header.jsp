@@ -6,12 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Welcome</title>
-<link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="bootstrap-3.3.7/css/bootstrap-theme.min.css">
+<title>TP Filmothèque</title>
 <script src="js/jquery.min.js"></script>
-<script src="bootstrap-3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="css/commun.css">
+<link rel="stylesheet" href="bootstrap-4.5.3-dist/css/bootstrap.min.css">
+<script src="bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
 <link rel="icon" href="img/favicon.ico" />
 
 
