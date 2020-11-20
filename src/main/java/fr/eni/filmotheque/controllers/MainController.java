@@ -7,13 +7,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/filmotheque")
 public class MainController {
 
 	/**
 	 * Film list page
 	 */
-	@GetMapping("/films")
+	@GetMapping("/")
 	public String getFilms() {
 		return "films";
 	}
