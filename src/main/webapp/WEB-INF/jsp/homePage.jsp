@@ -9,7 +9,7 @@
 	<div class="container">
 		<div class="jumbotron">
 			<h1>
-				Bienvenue <small>dans notre application</small>
+				Bienvenue <small>dans notre applicatiooon</small>
 				
 			</h1>
 			
