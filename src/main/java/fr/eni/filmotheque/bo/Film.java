@@ -10,6 +10,8 @@ public class Film {
 	
 	private String annee;
 	
+	private String description;
+	
 	private List<Avis> avis;
 	
 	private Personne realisateur;
@@ -22,14 +24,14 @@ public class Film {
 		super();
 	}
 
-	public Film(String titre, String annee, Categorie categorie) {
+	public Film(String titre, String annee, String description, Categorie categorie) {
 		super();
 		this.titre = titre;
 		this.annee = annee;
 		this.categorie = categorie;
 	}
 
-	public Film(String titre, String annee, Personne realisateur, List<Personne> acteurs, Categorie categorie) {
+	public Film(String titre, String annee, String description, Personne realisateur, List<Personne> acteurs, Categorie categorie) {
 		super();
 		this.titre = titre;
 		this.annee = annee;
@@ -38,12 +40,12 @@ public class Film {
 		this.categorie = categorie;
 	}
 
-	public Film(int id, String titre, String annee, List<Avis> avis, Personne realisateur, List<Personne> acteurs,
-			Categorie categorie) {
+	public Film(int id, String titre, String annee, String description, List<Avis> avis, Personne realisateur, List<Personne> acteurs, Categorie categorie) {
 		super();
 		this.id = id;
 		this.titre = titre;
 		this.annee = annee;
+		this.description = description;
 		this.avis = avis;
 		this.realisateur = realisateur;
 		this.acteurs = acteurs;
@@ -72,6 +74,14 @@ public class Film {
 
 	public void setAnnee(String annee) {
 		this.annee = annee;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public List<Avis> getAvis() {
@@ -124,9 +134,10 @@ public class Film {
 
 	@Override
 	public String toString() {
-		return "Film [id=" + id + ", titre=" + titre + ", annee=" + annee + ", avis=" + avis + ", realisateur="
-				+ realisateur + ", acteurs=" + acteurs + ", categorie=" + categorie + "]";
+		return "Film [id=" + id + ", titre=" + titre + ", annee=" + annee + ", description=" + description + ", avis="
+				+ avis + ", realisateur=" + realisateur + ", acteurs=" + acteurs + ", categorie=" + categorie + "]";
 	}
+
 	
 	
 	

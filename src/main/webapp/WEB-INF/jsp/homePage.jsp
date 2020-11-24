@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="fr.eni.filmotheque.bo.Film" %>
 
 <jsp:include page="header.jsp" />
 
@@ -49,82 +54,26 @@
 		</div>
 		<div class="col">
 			<div class="container">
-				<!-- Les cartes sont juste la pour l'exemple. Les supprimer et en mettre une seule dans un foreach -->
-				<div
-					class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 ">
-					<div class="col mb-4 mt-4">
-						<div class="card">
-							<img src="img/film_default_BG.jpg" class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a longer card with supporting
-									text below as a natural lead-in to additional content. This
-									content is a little bit longer.</p>
+				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 ">
+				
+					<c:forEach items="${films}" var="film">
+						<div class="col mb-4 mt-4">
+							<div class="card h-100">
+								<img src="img/film_default_BG.jpg" class="card-img-top" alt="...">
+								<div class="card-body">
+									<h5 class="card-title">${film.getTitre()}</h5>
+									<small>${film.getAnnee()}</small>
+									<p class="card-text" style="height: 50px; overflow: hidden;">${film.getDescription()}</p>
+									<div class="text-right">
+										<a href="./film/${film.getId()}" class="stretched-link">Details</a>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-
-					<div class="col mb-4 mt-4">
-						<div class="card">
-							<img src="img/film_default_BG.jpg" class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a longer card with supporting
-									text below as a natural lead-in to additional content. This
-									content is a little bit longer.</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="col mb-4 mt-4">
-						<div class="card">
-							<img src="img/film_default_BG.jpg" class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a longer card with supporting
-									text below as a natural lead-in to additional content. This
-									content is a little bit longer.</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="col mb-4 mt-4">
-						<div class="card">
-							<img src="img/film_default_BG.jpg" class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a longer card with supporting
-									text below as a natural lead-in to additional content. This
-									content is a little bit longer.</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="col mb-4 mt-4">
-						<div class="card">
-							<img src="img/film_default_BG.jpg" class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a longer card with supporting
-									text below as a natural lead-in to additional content. This
-									content is a little bit longer.</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="col mb-4 mt-4">
-						<div class="card">
-							<img src="img/film_default_BG.jpg" class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a longer card with supporting
-									text below as a natural lead-in to additional content. This
-									content is a little bit longer.</p>
-							</div>
-						</div>
+					</c:forEach>
+						
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
