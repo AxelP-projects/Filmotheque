@@ -16,7 +16,12 @@
 			<p>Année de sortie : ${film.getAnnee()}</p>
 			<p>Réalisateur : ${film.getRealisateur().getNom()} ${film.getRealisateur().getPrenom()}</p>
 			<p>Catégorie : ${film.getCategorie().getLibelle()}</p>
-			<p>Acteurs : ${film.getActeurs()}</p>
+			<p>Acteurs : </p>
+			<ul class="list-group">
+				<c:forEach items="${film.getActeurs()}" var="acteur">
+					<li class="list-group-item">${acteur.getPrenom()} ${acteur.getNom()}</li>
+				</c:forEach>
+			</ul>
 		</div>
 	</div>
 </div>

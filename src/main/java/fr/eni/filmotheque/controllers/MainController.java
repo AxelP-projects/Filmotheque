@@ -44,7 +44,12 @@ public class MainController {
 	@GetMapping("/film/{id}")
 	public String getFilmDetails(@PathVariable int id, Model model) {
 		//Film par défaut en attendant la BDD
-		Film film = new Film(123, "unFilm", "1994", "mlpwfijgrmiogjqesgior jtqirjtrmq lrgrlqhrejhrhglzjghrfgrqzlmghrez grngkejqhrgkjezghrljkqerjhgl ", new ArrayList<Avis>(), new Personne("unPrenom", "unNom"), new ArrayList<Personne>(), new Categorie("Horreur"));
+		List<Personne> acteurs = new ArrayList<>();
+		acteurs.add(new Personne("Jean", "Dupotager"));
+		acteurs.add(new Personne("Kinu", "Rive"));
+		acteurs.add(new Personne("Prad", "Bitt"));
+		acteurs.add(new Personne("Leocaprio", "Dionardo"));
+		Film film = new Film(123, "unFilm", "1994", "mlpwfijgrmiogjqesgior jtqirjtrmq lrgrlqhrejhrhglzjghrfgrqzlmghrez grngkejqhrgkjezghrljkqerjhgl ", new ArrayList<Avis>(), new Personne("unPrenom", "unNom"), acteurs, new Categorie("Horreur"));
 
 		model.addAttribute("film", film);
 		
