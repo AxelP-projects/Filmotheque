@@ -6,13 +6,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>TP Filmothèque</title>
-<script src="/js/jquery.min.js"></script>
-<link rel="stylesheet" href="/bootstrap-4.5.3-dist/css/bootstrap.min.css">
-<script src="/bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
-<link rel="icon" href="/img/favicon.ico" />
+<title>TP Filmothï¿½que</title>
+<script src="js/jquery.min.js"></script>
+<link rel="stylesheet" href="bootstrap-4.5.3-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/headerfooter.css">
+<script src="bootstrap-4.5.3-dist/js/bootstrap.min.js"></script>
+<link rel="icon" href="img/favicon.ico" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 </head>
 <body>
+<ul>
+	<li><a class="navbartitle" href="films">Accueil Filmothï¿½que</a></li>
+	<li class="pull-right"><a href="">Connexion</a></li>
+	<%-- To add with role managment
+	<li class="pull-right"><a href="">Dï¿½connexion</a></li>
+	<li class="pull-right"><a href="">Ajouter un film</a></li>
+	--%>
+</ul>
