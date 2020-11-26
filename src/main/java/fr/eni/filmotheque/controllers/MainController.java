@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.filmotheque.dal.FilmRepository;
+import fr.eni.filmotheque.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +20,18 @@ import fr.eni.filmotheque.bo.Personne;
 @Controller
 public class MainController {
 
-	@Autowired
-	private FilmRepository filmRepository;
+	private FilmService filmService;
+
+	public MainController(FilmService filmService) {
+		this.filmService = filmService;
+	}
 
 	/**
 	 * Film list page
 	 */
 	@GetMapping("/")
 	public String getFilms(Model model) {
-		List<Film> listeDeFilms = new ArrayList<>();
+		List<Film> listeDeFilms = filmService.getFilms();
 		
 		//Creation du jeu d'essai en attendant la BDD (flemme de faire un service juste pour ça)
 		/*filmRepository.save(new Film(123, "unFilm", "1994", "mlpwfijgrmiogjqesgior jtqirjtrmq lrgrlqhrejhrhglzjghrfgrqzlmghrez grngkejqhrgkjezghrljkqerjhgl ", new ArrayList<Avis>(), new Personne("unPrenom", "unNom"), new ArrayList<Personne>(), new Categorie("Horreur")));
@@ -36,10 +40,9 @@ public class MainController {
 		filmRepository.save(new Film(126, "unautreFilm3", "1991", "poùdfhpjrhqpokùrghspùokj hfwù,kmp ", new ArrayList<Avis>(), new Personne("unPrenom3", "unNom3"), new ArrayList<Personne>(), new Categorie("Action")));
 		filmRepository.save(new Film(127, "unautreFilm4", "1990", "pko g < mlijkegfijogrohi rhg", new ArrayList<Avis>(), new Personne("unPrenom4", "unNom4"), new ArrayList<Personne>(), new Categorie("Sci-fi")));
 		filmRepository.save(new Film(128, "unautreFilm5", "1996", " jiqrshgpùilj dhjklmn hmljk hfj lrlqr lhm grhshml hmh hrhm lgwsmh ", new ArrayList<Avis>(), new Personne("unPrenom5", "unNom5"), new ArrayList<Personne>(), new Categorie("Fantasy")));
-*/		listeDeFilms = filmRepository.findAll();
-
+*/
 		System.out.println("Test Repository --------------------------------");
-		listeDeFilms.forEach((film)->System.out.println(film));
+		listeDeFilms.forEach((film)->System.out.println(film.toString()));
 		model.addAttribute("films", listeDeFilms);
 		
 		return "homePage";

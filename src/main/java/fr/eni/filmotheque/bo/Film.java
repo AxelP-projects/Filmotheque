@@ -148,7 +148,7 @@ public class Film {
 	@Override
 	public String toString() {
 		return "Film [id=" + id + ", titre=" + titre + ", annee=" + annee + ", description=" + description + ", avis="
-				+ avis + ", realisateur=" + realisateur + ", acteurs=" + acteurs + ", categorie=" + categorie + "]";
+				+ avis + ", realisateur=" + realisateur.getNom() + ", categorie=" + categorie + "]";
 	}
 
 	
