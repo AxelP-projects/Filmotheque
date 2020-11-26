@@ -3,6 +3,8 @@ package fr.eni.filmotheque.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.filmotheque.dal.FilmRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,9 @@ import fr.eni.filmotheque.bo.Personne;
 @Controller
 public class MainController {
 
+	@Autowired
+	private FilmRepository filmRepository;
+
 	/**
 	 * Film list page
 	 */
@@ -25,13 +30,15 @@ public class MainController {
 		List<Film> listeDeFilms = new ArrayList<>();
 		
 		//Creation du jeu d'essai en attendant la BDD (flemme de faire un service juste pour ça)
-		listeDeFilms.add(new Film(123, "unFilm", "1994", "mlpwfijgrmiogjqesgior jtqirjtrmq lrgrlqhrejhrhglzjghrfgrqzlmghrez grngkejqhrgkjezghrljkqerjhgl ", new ArrayList<Avis>(), new Personne("unPrenom", "unNom"), new ArrayList<Personne>(), new Categorie("Horreur")));
-		listeDeFilms.add(new Film(124, "unautreFilm", "1993", "description", new ArrayList<Avis>(), new Personne("unPrenom1", "unNom1"), new ArrayList<Personne>(), new Categorie("Comédie")));
-		listeDeFilms.add(new Film(125, "unautreFilm2", "1992", "uneAutresdedsmgg", new ArrayList<Avis>(), new Personne("unPrenom2", "unNom2"), new ArrayList<Personne>(), new Categorie("Thriller")));
-		listeDeFilms.add(new Film(126, "unautreFilm3", "1991", "poùdfhpjrhqpokùrghspùokj hfwù,kmp ", new ArrayList<Avis>(), new Personne("unPrenom3", "unNom3"), new ArrayList<Personne>(), new Categorie("Action")));
-		listeDeFilms.add(new Film(127, "unautreFilm4", "1990", "pko g < mlijkegfijogrohi rhg", new ArrayList<Avis>(), new Personne("unPrenom4", "unNom4"), new ArrayList<Personne>(), new Categorie("Sci-fi")));
-		listeDeFilms.add(new Film(128, "unautreFilm5", "1996", " jiqrshgpùilj dhjklmn hmljk hfj lrlqr lhm grhshml hmh hrhm lgwsmh ", new ArrayList<Avis>(), new Personne("unPrenom5", "unNom5"), new ArrayList<Personne>(), new Categorie("Fantasy")));
-		
+		/*filmRepository.save(new Film(123, "unFilm", "1994", "mlpwfijgrmiogjqesgior jtqirjtrmq lrgrlqhrejhrhglzjghrfgrqzlmghrez grngkejqhrgkjezghrljkqerjhgl ", new ArrayList<Avis>(), new Personne("unPrenom", "unNom"), new ArrayList<Personne>(), new Categorie("Horreur")));
+		filmRepository.save(new Film(124, "unautreFilm", "1993", "description", new ArrayList<Avis>(), new Personne("unPrenom1", "unNom1"), new ArrayList<Personne>(), new Categorie("Comédie")));
+		filmRepository.save(new Film(125, "unautreFilm2", "1992", "uneAutresdedsmgg", new ArrayList<Avis>(), new Personne("unPrenom2", "unNom2"), new ArrayList<Personne>(), new Categorie("Thriller")));
+		filmRepository.save(new Film(126, "unautreFilm3", "1991", "poùdfhpjrhqpokùrghspùokj hfwù,kmp ", new ArrayList<Avis>(), new Personne("unPrenom3", "unNom3"), new ArrayList<Personne>(), new Categorie("Action")));
+		filmRepository.save(new Film(127, "unautreFilm4", "1990", "pko g < mlijkegfijogrohi rhg", new ArrayList<Avis>(), new Personne("unPrenom4", "unNom4"), new ArrayList<Personne>(), new Categorie("Sci-fi")));
+		filmRepository.save(new Film(128, "unautreFilm5", "1996", " jiqrshgpùilj dhjklmn hmljk hfj lrlqr lhm grhshml hmh hrhm lgwsmh ", new ArrayList<Avis>(), new Personne("unPrenom5", "unNom5"), new ArrayList<Personne>(), new Categorie("Fantasy")));
+*/		listeDeFilms = filmRepository.findAll();
+
+		System.out.println("Test Repository --------------------------------");
 		listeDeFilms.forEach((film)->System.out.println(film));
 		model.addAttribute("films", listeDeFilms);
 		

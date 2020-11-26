@@ -1,9 +1,13 @@
 package fr.eni.filmotheque.bo;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Avis {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	private int note;
@@ -11,9 +15,11 @@ public class Avis {
 	private String commentaire;
 	
 	private Date date;
-	
+
+	@ManyToOne
 	private Membre redacteur;
-	
+
+	@ManyToOne
 	private Film film;
 
 	public Avis() {

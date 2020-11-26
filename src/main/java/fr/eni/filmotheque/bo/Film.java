@@ -1,9 +1,13 @@
 package fr.eni.filmotheque.bo;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Film {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	private String titre;
@@ -11,13 +15,22 @@ public class Film {
 	private String annee;
 	
 	private String description;
-	
+
+	@OneToMany(mappedBy = "film")
 	private List<Avis> avis;
-	
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Personne realisateur;
-	
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "Acteur_Film", joinColumns = {
+			@JoinColumn(name = "filmid")
+	}, inverseJoinColumns = {
+			@JoinColumn(name = "personneid")
+	})
 	private List<Personne> acteurs;
-	
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Categorie categorie;
 
 	public Film() {
