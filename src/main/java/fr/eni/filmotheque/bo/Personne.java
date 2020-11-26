@@ -1,17 +1,23 @@
 package fr.eni.filmotheque.bo;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Personne {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	private String prenom;
 	
 	private String nom;
-	
+
+	@OneToMany(mappedBy = "realisateur", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Film> filmsRealises;
-	
+
+	@ManyToMany(mappedBy = "acteurs")
 	private List<Film> filmsJoues;
 
 	public Personne() {
@@ -30,7 +36,7 @@ public class Personne {
 		this.prenom = prenom;
 		this.nom = nom;
 		this.filmsRealises = filmsRealises;
-		this.filmsJoues = filmsJoues;
+		//this.filmsJoues = filmsJoues;
 	}
 
 	public int getId() {
@@ -73,7 +79,7 @@ public class Personne {
 		this.getFilmsRealises().remove(film);
 	}
 
-	public List<Film> getFilmsJoues() {
+	/*public List<Film> getFilmsJoues() {
 		return filmsJoues;
 	}
 
@@ -87,12 +93,12 @@ public class Personne {
 	
 	public void removeFilmJoue(Film film) {
 		this.getFilmsJoues().remove(film);
-	}
+	}*/
 
 	@Override
 	public String toString() {
 		return "Personne [id=" + id + ", prenom=" + prenom + ", nom=" + nom + ", filmsRealises=" + filmsRealises
-				+ ", filmsJoues=" + filmsJoues + "]";
+				+ ", filmsJoues=" + /*filmsJoues + */"]";
 	}
 	
 }

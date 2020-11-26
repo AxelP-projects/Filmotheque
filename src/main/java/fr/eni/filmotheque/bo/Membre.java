@@ -1,15 +1,20 @@
 package fr.eni.filmotheque.bo;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Membre {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	private String nom;
 	
 	private String prenom;
-	
+
+	@OneToMany(mappedBy = "redacteur", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Avis> avis;
 
 	public Membre() {
