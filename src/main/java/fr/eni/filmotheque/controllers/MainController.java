@@ -3,27 +3,29 @@ package fr.eni.filmotheque.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.filmotheque.bo.*;
 import fr.eni.filmotheque.dal.FilmRepository;
 import fr.eni.filmotheque.service.FilmService;
+import fr.eni.filmotheque.service.MembreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import fr.eni.filmotheque.bo.Avis;
-import fr.eni.filmotheque.bo.Categorie;
-import fr.eni.filmotheque.bo.Film;
-import fr.eni.filmotheque.bo.Personne;
+import org.springframework.web.context.request.WebRequest;
+
+import javax.jws.WebResult;
 
 @Controller
+@SessionAttributes({"isAuthenticated"})
 public class MainController {
 
 	private FilmService filmService;
+	private MembreService membreService;
 
-	public MainController(FilmService filmService) {
+	public MainController(FilmService filmService, MembreService membreService) {
 		this.filmService = filmService;
+		this.membreService = membreService;
 	}
 
 	/**
@@ -41,8 +43,7 @@ public class MainController {
 		filmRepository.save(new Film(127, "unautreFilm4", "1990", "pko g < mlijkegfijogrohi rhg", new ArrayList<Avis>(), new Personne("unPrenom4", "unNom4"), new ArrayList<Personne>(), new Categorie("Sci-fi")));
 		filmRepository.save(new Film(128, "unautreFilm5", "1996", " jiqrshgpùilj dhjklmn hmljk hfj lrlqr lhm grhshml hmh hrhm lgwsmh ", new ArrayList<Avis>(), new Personne("unPrenom5", "unNom5"), new ArrayList<Personne>(), new Categorie("Fantasy")));
 */
-		System.out.println("Test Repository --------------------------------");
-		listeDeFilms.forEach((film)->System.out.println(film.toString()));
+
 		model.addAttribute("films", listeDeFilms);
 		
 		return "homePage";
@@ -77,6 +78,31 @@ public class MainController {
 	}
 
 	/**
+	 * Register page
+	 */
+	@GetMapping("/register")
+	public String getRegister(Model model) {
+		model.addAttribute("membre", new Membre());
+		return "register";
+	}
+
+	/**
+	 * Register page
+	 */
+	@PostMapping("/register")
+	public String postRegister(@ModelAttribute Membre membre, Model model) {
+		//TODO : register process
+		if(membreService.register(membre)) {
+			model.addAttribute("isAuthenticated", true);
+			return "redirect:/";
+		} else {
+			model.addAttribute("error", "Erreur dans le formulaire, veuillez réessayer");
+		}
+
+		return "register";
+	}
+
+	/**
 	 * Login page
  	 */
 	@GetMapping("/login")
@@ -88,10 +114,22 @@ public class MainController {
 	 * Login function
  	 */
 	@PostMapping("/login")
-	public String postLogin() {
+	public String postLogin(Model model, @RequestParam String nom, @RequestParam String prenom) {
 		//TODO : login process
+		if(membreService.login(nom, prenom)) {
+			model.addAttribute("isAuthenticated", true);
+		} else {
+			model.addAttribute("error", "Identifiant incorrect, veuillez réessayer");
+			return "login";
+		}
 
-		return "login"; //TODO : redirect:/...
+		return "redirect:/";
+	}
+
+	@GetMapping("/logout")
+	public String logout(Model model) {
+		model.addAttribute("isAuthenticated", false);
+		return "redirect:/";
 	}
 
 	/**
