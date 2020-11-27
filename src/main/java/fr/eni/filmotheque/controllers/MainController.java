@@ -12,18 +12,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import fr.eni.filmotheque.bo.Categorie;
-import fr.eni.filmotheque.bo.Film;
+import fr.eni.filmotheque.bo.*;
+import fr.eni.filmotheque.service.MembreService;
+import org.springframework.web.bind.annotation.*;
+
 
 @Controller
+@SessionAttributes({"isAuthenticated"})
 public class MainController {
 
 	private FilmService filmService;
 	private CategorieService categorieService;
+	private MembreService membreService;
 
-	public MainController(FilmService filmService, CategorieService categorieService) {
+	public MainController(FilmService filmService, CategorieService categorieService, MembreService membreService) {
 		this.filmService = filmService;
 		this.categorieService = categorieService;
+		this.membreService = membreService;
 	}
 
 	/**
@@ -32,7 +37,6 @@ public class MainController {
 	@GetMapping("/")
 	public String getFilms(Model model) {
 		List<Film> listeDeFilms = filmService.getFilms();
-		System.out.println("Test Repository --------------------------------");
 		model.addAttribute("films", listeDeFilms);
 		
 		return "homePage";
@@ -62,6 +66,31 @@ public class MainController {
 	}
 
 	/**
+	 * Register page
+	 */
+	@GetMapping("/register")
+	public String getRegister(Model model) {
+		model.addAttribute("membre", new Membre());
+		return "register";
+	}
+
+	/**
+	 * Register page
+	 */
+	@PostMapping("/register")
+	public String postRegister(@ModelAttribute Membre membre, Model model) {
+		//TODO : register process
+		if(membreService.register(membre)) {
+			model.addAttribute("isAuthenticated", true);
+			return "redirect:/";
+		} else {
+			model.addAttribute("error", "Erreur dans le formulaire, veuillez réessayer");
+		}
+
+		return "register";
+	}
+
+	/**
 	 * Login page
  	 */
 	@GetMapping("/login")
@@ -73,10 +102,22 @@ public class MainController {
 	 * Login function
  	 */
 	@PostMapping("/login")
-	public String postLogin() {
+	public String postLogin(Model model, @RequestParam String nom, @RequestParam String prenom) {
 		//TODO : login process
+		if(membreService.login(nom, prenom)) {
+			model.addAttribute("isAuthenticated", true);
+		} else {
+			model.addAttribute("error", "Identifiant incorrect, veuillez réessayer");
+			return "login";
+		}
 
-		return "login"; //TODO : redirect:/...
+		return "redirect:/";
+	}
+
+	@GetMapping("/logout")
+	public String logout(Model model) {
+		model.addAttribute("isAuthenticated", false);
+		return "redirect:/";
 	}
 
 	/**

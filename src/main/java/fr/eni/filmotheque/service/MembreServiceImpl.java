@@ -19,13 +19,14 @@ public class MembreServiceImpl implements MembreService{
     }
 
     @Override
-    public void register(Membre membre) {
+    public boolean register(Membre membre) {
         if(membre.getNom() != null && !membre.getNom().isEmpty()
             && membre.getPrenom() != null && !membre.getPrenom().isEmpty())
         {
             membreRepository.save(membre);
-        } else {
-            //Todo : Handle Error
+            return true;
         }
+
+        return false;
     }
 }

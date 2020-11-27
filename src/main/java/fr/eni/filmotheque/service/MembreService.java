@@ -6,5 +6,5 @@ public interface MembreService {
 
     Boolean login(String nom, String prenom);
 
-    void register(Membre membre);
+    boolean register(Membre membre);
 }
