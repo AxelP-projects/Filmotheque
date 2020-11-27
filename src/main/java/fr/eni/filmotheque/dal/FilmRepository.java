@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface FilmRepository extends JpaRepository<Film, Integer> {
     public List<Film> findByTitre(String titre);
+    public Film findById(int id);
 }

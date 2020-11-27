@@ -1,29 +1,29 @@
 package fr.eni.filmotheque.controllers;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import fr.eni.filmotheque.dal.FilmRepository;
+import fr.eni.filmotheque.service.CategorieService;
 import fr.eni.filmotheque.service.FilmService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import fr.eni.filmotheque.bo.Avis;
 import fr.eni.filmotheque.bo.Categorie;
 import fr.eni.filmotheque.bo.Film;
-import fr.eni.filmotheque.bo.Personne;
 
 @Controller
 public class MainController {
 
 	private FilmService filmService;
+	private CategorieService categorieService;
 
-	public MainController(FilmService filmService) {
+	public MainController(FilmService filmService, CategorieService categorieService) {
 		this.filmService = filmService;
+		this.categorieService = categorieService;
 	}
 
 	/**
@@ -32,17 +32,7 @@ public class MainController {
 	@GetMapping("/")
 	public String getFilms(Model model) {
 		List<Film> listeDeFilms = filmService.getFilms();
-		
-		//Creation du jeu d'essai en attendant la BDD (flemme de faire un service juste pour ça)
-		/*filmRepository.save(new Film(123, "unFilm", "1994", "mlpwfijgrmiogjqesgior jtqirjtrmq lrgrlqhrejhrhglzjghrfgrqzlmghrez grngkejqhrgkjezghrljkqerjhgl ", new ArrayList<Avis>(), new Personne("unPrenom", "unNom"), new ArrayList<Personne>(), new Categorie("Horreur")));
-		filmRepository.save(new Film(124, "unautreFilm", "1993", "description", new ArrayList<Avis>(), new Personne("unPrenom1", "unNom1"), new ArrayList<Personne>(), new Categorie("Comédie")));
-		filmRepository.save(new Film(125, "unautreFilm2", "1992", "uneAutresdedsmgg", new ArrayList<Avis>(), new Personne("unPrenom2", "unNom2"), new ArrayList<Personne>(), new Categorie("Thriller")));
-		filmRepository.save(new Film(126, "unautreFilm3", "1991", "poùdfhpjrhqpokùrghspùokj hfwù,kmp ", new ArrayList<Avis>(), new Personne("unPrenom3", "unNom3"), new ArrayList<Personne>(), new Categorie("Action")));
-		filmRepository.save(new Film(127, "unautreFilm4", "1990", "pko g < mlijkegfijogrohi rhg", new ArrayList<Avis>(), new Personne("unPrenom4", "unNom4"), new ArrayList<Personne>(), new Categorie("Sci-fi")));
-		filmRepository.save(new Film(128, "unautreFilm5", "1996", " jiqrshgpùilj dhjklmn hmljk hfj lrlqr lhm grhshml hmh hrhm lgwsmh ", new ArrayList<Avis>(), new Personne("unPrenom5", "unNom5"), new ArrayList<Personne>(), new Categorie("Fantasy")));
-*/
 		System.out.println("Test Repository --------------------------------");
-		listeDeFilms.forEach((film)->System.out.println(film.toString()));
 		model.addAttribute("films", listeDeFilms);
 		
 		return "homePage";
@@ -53,14 +43,9 @@ public class MainController {
  	 */
 	@GetMapping("/film/{id}")
 	public String getFilmDetails(@PathVariable int id, Model model) {
-		//Film par défaut en attendant la BDD
-		List<Personne> acteurs = new ArrayList<>();
-		acteurs.add(new Personne("Jean", "Dupotager"));
-		acteurs.add(new Personne("Kinu", "Rive"));
-		acteurs.add(new Personne("Prad", "Bitt"));
-		acteurs.add(new Personne("Leocaprio", "Dionardo"));
-		Film film = new Film(123, "unFilm", "1994", "mlpwfijgrmiogjqesgior jtqirjtrmq lrgrlqhrejhrhglzjghrfgrqzlmghrez grngkejqhrgkjezghrljkqerjhgl ", new ArrayList<Avis>(), new Personne("unPrenom", "unNom"), acteurs, new Categorie("Horreur"));
+//		Film film = new Film(123, "unFilm", "1994", "mlpwfijgrmiogjqesgior jtqirjtrmq lrgrlqhrejhrhglzjghrfgrqzlmghrez grngkejqhrgkjezghrljkqerjhgl ", new ArrayList<Avis>(), new Personne("unPrenom", "unNom"), acteurs, new Categorie("Horreur"));
 
+		Film film = filmService.getFilmById(id);
 		model.addAttribute("film", film);
 		
 		return "filmdetails";
@@ -95,10 +80,32 @@ public class MainController {
 	}
 
 	/**
-	 * Edit film page (add/edit)
+	 * Add film page
  	 */
-	@GetMapping("/editFilm")
-	public String getEditFilm() {
+	@GetMapping("/addFilm")
+	public String getAddFilm(Model model) {
+		//New blank Film
+		Film film = new Film();
+		film.setAnnee(Integer.toString(Calendar.getInstance().get(Calendar.YEAR)));
+		model.addAttribute("film", film);
+		
+		//Fetch all Categories
+		List<Categorie> categories = categorieService.getAllCategories();
+		model.addAttribute("categories", categories);
+		
+		model.addAttribute("isNew", true);
+		return "editFilm";
+	}
+	
+	/**
+	 * Edit film page 
+	 * Ajouter ID dans l'URL
+ 	 */
+	@GetMapping("/editFilm/{id}")
+	public String getEditFilm(@PathVariable int id, Model model) {
+		Film film = filmService.getFilmById(id);
+		model.addAttribute("film", film);
+		model.addAttribute("isNew", false);
 		return "editFilm";
 	}
 
@@ -106,10 +113,10 @@ public class MainController {
 	 * Edit film function
  	 */
 	@PostMapping("/editFilm")
-	public String postAddFilm() {
+	public String postAddFilm(@ModelAttribute("film") Film film) {
 		//TODO : add film process
-
-		return "editFilm"; //TODO : redirect:/...
+		filmService.addFilm(film);
+		return "redirect:/"; 
 	}
 
 	/**
@@ -117,9 +124,8 @@ public class MainController {
  	 */
 	@GetMapping("/deleteFilm/{id}")
 	public String getDeleteFilm(@PathVariable int id) {
-		//TODO : delete film process
-
-		return "deleteFilm"; //TODO : redirect:/...
+		filmService.removeFilm(id);
+		return "redirect:/";
 	}
 
 	/**

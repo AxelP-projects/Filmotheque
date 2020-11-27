@@ -20,6 +20,7 @@
 <ul>
 	<li><a class="navbartitle" href="/">Accueil Filmothèque</a></li>
 	<li class="pull-right"><a href="">Connexion</a></li>
+	<li class="pull-right"><a href="/addFilm">Ajouter un film</a></li>
 	<%-- To add with role managment
 	<li class="pull-right"><a href="">Dï¿½connexion</a></li>
 	<li class="pull-right"><a href="">Ajouter un film</a></li>

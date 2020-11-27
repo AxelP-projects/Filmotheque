@@ -30,7 +30,7 @@ public class Film {
 	})
 	private List<Personne> acteurs;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Categorie categorie;
 
 	public Film() {
@@ -41,6 +41,7 @@ public class Film {
 		super();
 		this.titre = titre;
 		this.annee = annee;
+		this.description = description;
 		this.categorie = categorie;
 	}
 
@@ -148,7 +149,7 @@ public class Film {
 	@Override
 	public String toString() {
 		return "Film [id=" + id + ", titre=" + titre + ", annee=" + annee + ", description=" + description + ", avis="
-				+ avis + ", realisateur=" + realisateur.getNom() + ", categorie=" + categorie + "]";
+				+ avis + ", categorie=" + categorie + "]";
 	}
 
 	

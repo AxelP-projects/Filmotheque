@@ -24,6 +24,8 @@
 			</ul>
 		</div>
 	</div>
+		<a href="/editFilm/${film.getId()}">Modifier film</a>
+		<a href="/deleteFilm/${film.getId()}">Supprimer film</a>
 </div>
 
 <jsp:include page="footer.jsp" />

@@ -8,6 +8,8 @@ public interface FilmService {
     List<Film> getFilms();
 
     List<Film> getFilmByTitre(String titre);
+    
+    Film getFilmById(int id);
 
     void addFilm(Film film);
 
